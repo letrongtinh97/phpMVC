@@ -16,7 +16,7 @@
             $this->fm = new Format();
         }
 
-        public function insert($cateName){
+        public function insertCat($cateName){
            
             $cateName = $this->fm->validation($cateName);  
             
@@ -24,25 +24,28 @@
             $cateName = mysqli_real_escape_string($this->db->link,$cateName);
             
 
-            if(empty($adminUser)||empty($adminPass)){
+            if(empty($cateName)){
                 $alert = "Category empty";
                 return $alert;
             }else {
-                $query ="SELECT * FROM tbl_admin WHERE ad_user = '$adminUser' and admin_pass ='$adminPass' limit 1";
-                $result = $this->db->select($query);
-                if($result != false){
-                    $value = $result->fetch_assoc();
-                    Session::set('login', true);
-                    Session::set('adminID', $value['ad_id']);
-                    Session::set('adminUser', $value['ad_user']);
-                    Session::set('adminName', $value['ad_name']);
-                    //Session::set('adminID', $value['ad_id']);
-                    header('Location:index.php');
-                }else {
-                    $alert ="User or pass not match";
-                    return $alert;
+                $query ="INSERT INTO tbl_category(ct_name) values('$cateName')";
+                $result = $this->db->insert($query);
+                if($result){
+                    $alert = "thanh cong"; 
+                    return $alert; 
+                }
+                else {
+                    $alert = "that bai"; 
+                    return $alert; 
                 }
             }
+        }
+
+        public function showCategory(){
+            $query ="SELECT * FROM tbl_category  order by ct_id desc";
+            $result = $this->db->select($query);    
+            return   $result;
+            
         }
     }
     

@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+<?php 
 
+  include '../controllers/categoriesController.php';
+?>
+<?php 
+  $cat  = new CategoriesController();
+  if($_SERVER['REQUEST_METHOD'] === 'POST'){
+    $catName =$_POST['catName'];
+    //$adminPass =md5($_POST['adminPass']);
+
+    $insertCatName = $cat->insertCat($catName);
+  }
+?>
 <head>
 
   <meta charset="utf-8">
@@ -329,41 +341,41 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
+        <div class="container-fluid" action="addCategory" method="POST"> 
 
           <!-- Page Heading -->
           <h1 class="h3 mb-1 text-gray-800">Border Utilities</h1>
           <p class="mb-4">Bootstrap's default utility classes can be found on the official <a href="https://getbootstrap.com/docs">Bootstrap Documentation</a> page. The custom utilities below were created to extend this theme past the default utility classes built into Bootstrap's framework.</p>
 
           <!-- Content Row -->
-          <div class="row">
-
-            <!-- Border Left Utilities -->
-            <div class="col-lg-6">
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">    
-
-
-            </div>
-
-            <!-- Border Bottom Utilities -->
-            <div class="col-lg-6">
-
-              
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2"> 
-            <p>ad</p>
-            <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">    
-
-            </div>
-
-          </div>
+          <form class="user" action="addCategory.php" method="post">
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" name="catName" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <!-- <div class="form-group">
+                      <input type="text" class="form-control form-control-user" name="catName" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div>
+                    <div class="form-group">
+                      <input type="text" class="form-control form-control-user" name="catName" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    </div> -->
+                    <span><?php 
+                      if(isset($insertCatName)){
+                        echo $insertCatName;
+                      }
+                    ?></span>
+                    <div class="form-group">
+                      <div class="custom-control custom-checkbox small">
+                        <input type="checkbox" class="custom-control-input" id="customCheck">
+                        <label class="custom-control-label" for="customCheck">Remember Me</label> 
+                      </div>
+                    </div>
+                    <!-- <a href="index.php" class="btn btn-primary btn-user btn-block">
+                      Login
+                    </a> -->
+                    <div>
+                      <input type="submit" class="btn btn-primary btn-user btn-block" value="Add"  />
+                    </div>  
+                  </form>
 
         </div>
         <!-- /.container-fluid -->
